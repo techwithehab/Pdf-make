@@ -261,12 +261,23 @@
             padding-right: 10px;
         }
 
-        @media print {
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; margin: 0; width: 100%; max-width: 100%; }
-            .chart-container { page-break-inside: avoid; }
-            .exercise-box { page-break-inside: avoid; }
-        }
+        /* أضف هذا في نهاية الـ style */
+.exercise-box, 
+.chart-container, 
+.section-title,
+table,
+.note-box {
+    /* يمنع قص العنصر بين صفحتين */
+    page-break-inside: avoid; 
+    break-inside: avoid;
+}
+
+/* تصحيح عرض الصفحة للطباعة */
+body {
+    -webkit-print-color-adjust: exact; /* يجبر المتصفح على طباعة الألوان بدقة */
+    print-color-adjust: exact;
+}
+
 
         @media (max-width: 768px) {
             .container { padding: 30px 20px; }
