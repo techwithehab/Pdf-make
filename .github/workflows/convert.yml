@@ -1,0 +1,40 @@
+name: Convert HTML to PDF
+
+# متى يعمل هذا الكود؟
+# 1. عند رفع أي تغيير (push)
+# 2. أو يدوياً بضغط زر (workflow_dispatch)
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. تحميل ملفاتك
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. تجهيز Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # 3. تثبيت Puppeteer والمكتبات
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. تشغيل سكريبت التحويل
+      - name: Run Conversion Script
+        run: node convert.js
+
+      # 5. رفع ملف PDF الناتج لتحميله
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Final-PDF-Document
+          path: output_document.pdf
+          retention-days: 5
