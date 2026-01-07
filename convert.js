@@ -1,43 +1,50 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 
 (async () => {
-  console.log('⏳ جاري تشغيل المتصفح الوهمي...');
+  try {
+    console.log('🚀 بدء عملية التحويل...');
 
-  // 1. تشغيل المتصفح (بإعدادات خاصة ليعمل داخل Codespaces)
-  const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+    // 1. تشغيل المتصفح بإعدادات خاصة لسيرفرات جيت هب
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ['--no-sandbox', '--disable-setuid-sandbox'] // ضروري جداً ليعمل على GitHub Action
+    });
 
-  const page = await browser.newPage();
+    const page = await browser.newPage();
 
-  // 2. تحديد مسار ملف الـ HTML (تأكد أن اسم الملف هنا يطابق ملفك)
-  // سنفترض أن اسم ملفك هو index.html وموجود بجوار هذا السكريبت
-  const filePath = path.join(__dirname, 'index.html');
-  
-  console.log(`📄 جاري فتح الملف: ${filePath}`);
-  
-  // تحميل الملف كأنه رابط محلي
-  await page.goto(`file:${filePath}`, { waitUntil: 'networkidle0' });
+    // 2. تحديد مسار الملف (تأكد أن اسم ملفك هنا صحيح)
+    // سنفترض أن اسم ملفك index.html
+    const htmlFile = path.resolve(__dirname, 'index.html');
 
-  // 3. تحويل الصفحة إلى PDF
-  console.log('🖨️ جاري الطباعة إلى PDF...');
-  
-  await page.pdf({
-    path: 'my_document.pdf', // اسم الملف الناتج
-    format: 'A4',            // حجم الورقة
-    printBackground: true,   // طباعة الألوان والخلفيات
-    margin: {                // الهوامش
-      top: '10mm',
-      bottom: '10mm',
-      left: '10mm',
-      right: '10mm'
-    },
-    displayHeaderFooter: false // إلغاء ترويسة المتصفح الافتراضية
-  });
+    if (!fs.existsSync(htmlFile)) {
+      throw new Error(`❌ لم يتم العثور على الملف: ${htmlFile} \n تأكد من رفع الملف وتسميته بشكل صحيح.`);
+    }
 
-  console.log('✅ تم الانتهاء! الملف جاهز باسم my_document.pdf');
+    // 3. فتح الملف
+    console.log(`📂 فتح الملف: ${htmlFile}`);
+    await page.goto(`file://${htmlFile}`, { waitUntil: 'networkidle0' });
 
-  await browser.close();
+    // 4. الطباعة إلى PDF
+    console.log('🖨️ جاري الطباعة...');
+    await page.pdf({
+      path: 'output_document.pdf', // اسم الملف الناتج
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '10mm',
+        bottom: '10mm',
+        left: '10mm',
+        right: '10mm'
+      }
+    });
+
+    console.log('✅ تم إنشاء ملف PDF بنجاح!');
+    await browser.close();
+
+  } catch (error) {
+    console.error('❌ حدث خطأ:', error);
+    process.exit(1);
+  }
 })();

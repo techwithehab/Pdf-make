@@ -1,0 +1,11 @@
+{
+  "name": "html-to-pdf",
+  "version": "1.0.0",
+  "main": "convert.js",
+  "dependencies": {
+    "puppeteer": "^23.0.0"
+  },
+  "scripts": {
+    "start": "node convert.js"
+  }
+}
