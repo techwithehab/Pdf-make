@@ -4,8 +4,9 @@ const fs = require('fs');
 
 (async () => {
   try {
-    console.log('🚀 بدء عملية التحويل...');
+    console.log('🚀 بدء عملية المعالجة...');
 
+    // 1. تشغيل المتصفح
     const browser = await puppeteer.launch({
       headless: "new",
       args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -13,50 +14,59 @@ const fs = require('fs');
 
     const page = await browser.newPage();
 
-    // 1. ضبط حجم الشاشة ليحاكي ورقة A4 بدقة عالية لضمان عدم تداخل العناصر
-    await page.setViewport({
-      width: 1240, // عرض A4 بالبكسل عند دقة عالية
-      height: 1754,
-      deviceScaleFactor: 2 // لزيادة دقة الصور والنصوص
-    });
+    // تعيين حجم شاشة كبير لضمان دقة الصور
+    await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2 });
 
+    // 2. تحديد مسار الملف
     const htmlFile = path.resolve(__dirname, 'index.html');
     if (!fs.existsSync(htmlFile)) {
       throw new Error(`❌ لم يتم العثور على الملف: ${htmlFile}`);
     }
 
-    // 2. فتح الملف
+    // 3. فتح الملف
     console.log(`📂 فتح الملف: ${htmlFile}`);
-    await page.goto(`file://${htmlFile}`, { 
-      waitUntil: 'networkidle0', // انتظار تحميل كل الشبكات
-      timeout: 60000 
-    });
+    await page.goto(`file://${htmlFile}`, { waitUntil: 'networkidle0' });
 
-    // 3. (هام جداً) إجبار المتصفح على عرض ألوان الشاشة وتجاهل تنسيقات الطباعة الباهتة
-    await page.emulateMediaType('screen');
+    // == هام جداً: انتظار اكتمال الأنيميشن الخاص بالرسوم البيانية ==
+    console.log('⏳ انتظار اكتمال تحميل الرسوم البيانية...');
+    await new Promise(r => setTimeout(r, 2000)); 
 
-    // 4. انتظار إضافي بسيط لضمان رسم الرسوم البيانية (Charts) بالكامل
-    // لأن الشارتات تأخذ وقتاً في الانميشن
-    await new Promise(r => setTimeout(r, 2000));
+    // 4. إنشاء مجلد لحفظ الصور
+    const outputDir = path.resolve(__dirname, 'extracted_charts');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
+    }
 
-    // 5. الطباعة
-    console.log('🖨️ جاري الطباعة...');
+    // 5. استخراج الصور (سكرين شوت لكل كانفاس)
+    console.log('📸 بدء استخراج الصور...');
+    
+    // الحصول على كل عناصر الكانفاس في الصفحة
+    const canvases = await page.$$('canvas');
+
+    for (let i = 0; i < canvases.length; i++) {
+      const canvas = canvases[i];
+      
+      // محاولة جلب الـ ID الخاص بالكانفاس لتسمية الصورة به
+      const id = await page.evaluate(el => el.id, canvas);
+      const filename = id ? `${id}.png` : `chart_${i + 1}.png`;
+      const savePath = path.join(outputDir, filename);
+
+      // أخذ لقطة للعنصر فقط
+      await canvas.screenshot({ path: savePath });
+      console.log(`✅ تم حفظ الصورة: ${filename}`);
+    }
+
+    // 6. طباعة ملف PDF (اختياري إذا كنت ما زلت تريده)
+    console.log('🖨️ جاري إنشاء ملف PDF الشامل...');
     await page.pdf({
       path: 'output_document.pdf',
       format: 'A4',
-      printBackground: true, // طباعة الخلفيات والألوان
-      margin: {
-        top: '10mm',
-        bottom: '10mm',
-        left: '10mm',
-        right: '10mm'
-      },
-      // هذا الخيار يساعد في تقليل مشاكل القص
-      preferCSSPageSize: true 
+      printBackground: true,
+      margin: { top: '10mm', bottom: '10mm', left: '10mm', right: '10mm' }
     });
 
-    console.log('✅ تم إنشاء ملف PDF بنجاح!');
     await browser.close();
+    console.log('🎉 تمت العملية بنجاح!');
 
   } catch (error) {
     console.error('❌ حدث خطأ:', error);
