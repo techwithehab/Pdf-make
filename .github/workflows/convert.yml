@@ -1,8 +1,5 @@
-name: Convert HTML to PDF
+name: Convert HTML to PDF and Images
 
-# متى يعمل هذا الكود؟
-# 1. عند رفع أي تغيير (push)
-# 2. أو يدوياً بضغط زر (workflow_dispatch)
 on:
   push:
     branches: [ "main", "master" ]
@@ -13,28 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. تحميل ملفاتك
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. تجهيز Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      # 3. تثبيت Puppeteer والمكتبات
       - name: Install Dependencies
         run: npm install
 
-      # 4. تشغيل سكريبت التحويل
+      # تشغيل السكريبت المعدل
       - name: Run Conversion Script
         run: node convert.js
 
-      # 5. رفع ملف PDF الناتج لتحميله
-      - name: Upload PDF Artifact
+      # رفع النتائج (الصور + ملف الـ PDF)
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Final-PDF-Document
-          path: output_document.pdf
+          name: Education-Material-Output
+          path: |
+            output_document.pdf
+            extracted_charts/
           retention-days: 5
