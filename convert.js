@@ -18,7 +18,7 @@ const fs = require('fs');
     await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2 });
 
     // 2. تحديد مسار الملف
-    const htmlFile = path.resolve(__dirname, '5.html');
+    const htmlFile = path.resolve(__dirname, '6.html');
     if (!fs.existsSync(htmlFile)) {
       throw new Error(`❌ لم يتم العثور على الملف: ${htmlFile}`);
     }
