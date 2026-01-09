@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>حل تمارين الإحصاء - التقديرات وتطعيم الأطفال</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Tajawal:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f4f4f9;
+            --text-color: #333;
+            --header-color: #2c3e50;
+            --border-color: #dee2e6;
+            --table-header-bg: #e9ecef;
+            --table-row-even-bg: #f8f9fa;
+        }
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: #fff;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 15px;
+        }
+        h2 {
+            font-size: 22px;
+            color: var(--header-color);
+            border-right: 5px solid var(--primary-color);
+            padding-right: 15px;
+            margin-top: 40px;
+            background-color: var(--secondary-color);
+            padding: 10px 15px 10px 0;
+            border-radius: 4px;
+        }
+        p.question-text {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        thead tr {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: var(--table-row-even-bg);
+        }
+        .solution-box {
+            background-color: #e6f7ff;
+            border-right: 5px solid #1890ff;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .solution-title {
+            color: #1890ff;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: block;
+            border-bottom: 1px solid #bce0fd;
+            padding-bottom: 10px;
+        }
+        .result-highlight {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bce0fd;
+            margin-top: 15px;
+        }
+        .chart-container {
+            position: relative;
+            margin: 30px auto;
+            height: 350px;
+            width: 100%;
+            max-width: 600px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            th, td { padding: 8px; font-size: 14px; }
+            h1 { font-size: 24px; }
+        }
+        @media print {
+            body { background-color: #fff; }
+            .container { box-shadow: none; border: none; width: 100%; max-width: none; }
+            .solution-box { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>حل التمارين المطلوبة</h1>
+
+    <section id="q1">
+        <h2>السؤال الأول: تقديرات التلاميذ</h2>
+        <p class="question-text">
+            فيما يلي تقديرات 20 تلميذاً التي وردت بملف الإنجاز الخاص بكل منهم:<br>
+            (ممتاز، جيد، ضعيف، مقبول، جيد جداً، ضعيف، مقبول، جيد جداً، جيد، مقبول، ممتاز، جيد، جيد، مقبول، ضعيف، جيد، جيد، جيد جداً، مقبول، ضعيف).<br>
+            <strong>المطلوب:</strong> تكوين الجدول التكراري لهذا التوزيع ثم ذكر أي التقديرات الأكثر تكراراً وأيها الأقل تكراراً.
+        </p>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            
+            <p>بعد حصر التقديرات وفرزها، نحصل على الجدول التكراري التالي:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>التقدير</th>
+                        <th>التكرار (عدد التلاميذ)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ممتاز</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>جيد جداً</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>جيد</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>مقبول</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>ضعيف</td>
+                        <td>4</td>
+                    </tr>
+                    <tr style="background-color: #333; color: #fff;">
+                        <td><strong>المجموع</strong></td>
+                        <td><strong>20</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="result-highlight">
+                <ul>
+                    <li><strong>التقدير الأكثر تكراراً (المنوال):</strong> هو تقدير <strong>(جيد)</strong> حيث تكرر 6 مرات.</li>
+                    <li><strong>التقدير الأقل تكراراً:</strong> هو تقدير <strong>(ممتاز)</strong> حيث تكرر مرتين فقط.</li>
+                </ul>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="chartGrades"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="q2">
+        <h2>السؤال الثاني: تطعيم شلل الأطفال</h2>
+        <p class="question-text">
+            بسؤال 30 أسرة عن عدد الأطفال في الأسرة الذين تم تطعيمهم في الجرعة الأخيرة لمرضى شلل الأطفال حصلنا على البيانات التالية:<br>
+            (1، 2، 0، 2، 3، 1، 0، 3، 4، 1)<br>
+            (1، 2، 3، 0، 2، 1، 2، 2، 1، 2، 4)<br>
+            (1، 3، 0، 0، 3، 2، 1، 4، 1)<br>
+            <strong>المطلوب:</strong> (أ) كوّن جدول تكراري لهذه البيانات. (ب) أوجد النسبة المئوية للتكرارات.
+        </p>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            
+            <p>نقوم بحساب تكرار كل رقم (عدد الأطفال) ونحسب النسبة المئوية باستخدام القانون:<br>
+            <em>النسبة المئوية = (التكرار ÷ المجموع الكلي) × 100</em></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>عدد الأطفال المطعّمين</th>
+                        <th>التكرار (عدد الأسر)</th>
+                        <th>النسبة المئوية %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>صفر (لا يوجد)</td>
+                        <td>5</td>
+                        <td>16.7%</td>
+                    </tr>
+                    <tr>
+                        <td>1 طفل</td>
+                        <td>9</td>
+                        <td>30.0%</td>
+                    </tr>
+                    <tr>
+                        <td>2 طفل</td>
+                        <td>8</td>
+                        <td>26.7%</td>
+                    </tr>
+                    <tr>
+                        <td>3 أطفال</td>
+                        <td>5</td>
+                        <td>16.7%</td>
+                    </tr>
+                    <tr>
+                        <td>4 أطفال</td>
+                        <td>3</td>
+                        <td>10.0%</td>
+                    </tr>
+                    <tr style="background-color: #333; color: #fff;">
+                        <td><strong>المجموع</strong></td>
+                        <td><strong>30</strong></td>
+                        <td><strong>100%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="chart-container">
+                <canvas id="chartChildren"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>تم إعداد الحلول وتصميم الصفحة بدقة عالية</p>
+    </footer>
+</div>
+
+<script>
+    // إعدادات الخطوط العامة
+    Chart.defaults.font.family = "'Tajawal', sans-serif";
+    Chart.defaults.font.size = 14;
+    Chart.defaults.color = '#333';
+
+    // ==========================================
+    // الرسم الأول: التقديرات (أعمدة)
+    // ==========================================
+    const ctxGrades = document.getElementById('chartGrades').getContext('2d');
+    new Chart(ctxGrades, {
+        type: 'bar',
+        data: {
+            labels: ['ممتاز', 'جيد جداً', 'جيد', 'مقبول', 'ضعيف'],
+            datasets: [{
+                label: 'عدد التلاميذ',
+                data: [2, 3, 6, 5, 4],
+                backgroundColor: [
+                    'rgba(40, 167, 69, 0.7)',  // ممتاز - أخضر
+                    'rgba(23, 162, 184, 0.7)', // جيد جدا - سماوي
+                    'rgba(0, 123, 255, 0.7)',  // جيد - أزرق
+                    'rgba(255, 193, 7, 0.7)',  // مقبول - أصفر
+                    'rgba(220, 53, 69, 0.7)'   // ضعيف - أحمر
+                ],
+                borderColor: [
+                    'rgba(40, 167, 69, 1)',
+                    'rgba(23, 162, 184, 1)',
+                    'rgba(0, 123, 255, 1)',
+                    'rgba(255, 193, 7, 1)',
+                    'rgba(220, 53, 69, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'توزيع تقديرات التلاميذ' }
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'عدد التلاميذ' } },
+                x: { title: { display: true, text: 'التقدير' } }
+            }
+        }
+    });
+
+    // ==========================================
+    // الرسم الثاني: تطعيم الأطفال (قطاعات دائرية)
+    // ==========================================
+    const ctxChildren = document.getElementById('chartChildren').getContext('2d');
+    new Chart(ctxChildren, {
+        type: 'pie', // استخدام Pie Chart لأنه الأفضل للنسب المئوية
+        data: {
+            labels: ['صفر أطفال', 'طفل واحد', 'طفلان', '3 أطفال', '4 أطفال'],
+            datasets: [{
+                data: [5, 9, 8, 5, 3],
+                backgroundColor: [
+                    '#6c757d', // رمادي
+                    '#007bff', // أزرق
+                    '#28a745', // أخضر
+                    '#ffc107', // أصفر
+                    '#dc3545'  // أحمر
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'نسب عدد الأطفال المطعّمين لكل أسرة' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            let total = context.chart._metasets[context.datasetIndex].total;
+                            let percentage = Math.round((value / total) * 100) + '%';
+                            return label + ': ' + value + ' أسر (' + percentage + ')';
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

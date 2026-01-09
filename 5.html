@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>حل التمارين (5-7) - إحصاء</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Tajawal:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --header-color: #2c3e50;
+            --border-color: #dee2e6;
+            --table-header-bg: #e9ecef;
+            --table-row-even-bg: #f8f9fa;
+        }
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: #fff;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 15px;
+        }
+        h2 {
+            font-size: 20px;
+            color: var(--header-color);
+            border-right: 5px solid var(--primary-color);
+            padding-right: 15px;
+            margin-top: 50px;
+            background-color: var(--secondary-color);
+            padding: 10px 15px 10px 0;
+            border-radius: 4px;
+        }
+        p.question-text {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        thead tr {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: var(--table-row-even-bg);
+        }
+        .solution-box {
+            background-color: #e6f7ff;
+            border-right: 5px solid #1890ff;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .solution-title {
+            color: #1890ff;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: block;
+            border-bottom: 1px solid #bce0fd;
+            padding-bottom: 10px;
+        }
+        .report-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #bce0fd;
+            margin-top: 15px;
+        }
+        .chart-container {
+            position: relative;
+            margin: 30px auto;
+            height: 400px;
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>حل التمارين (5-7)</h1>
+
+    <section id="q5">
+        <h2>(5) درجات الحرارة في القاهرة</h2>
+        <p class="question-text">
+            يبين الجدول الآتي درجات الحرارة العظمى لمدينة القاهرة في أسبوع.
+            <strong>المطلوب:</strong> تمثيل هذه الدرجات بالأعمدة البيانية والخط المنكسر.
+        </p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>اليوم</th>
+                    <th>السبت</th>
+                    <th>الأحد</th>
+                    <th>الاثنين</th>
+                    <th>الثلاثاء</th>
+                    <th>الأربعاء</th>
+                    <th>الخميس</th>
+                    <th>الجمعة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>درجات الحرارة</strong></td>
+                    <td>20</td>
+                    <td>22</td>
+                    <td>20</td>
+                    <td>23</td>
+                    <td>21</td>
+                    <td>20</td>
+                    <td>19</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            <p>يتم تمثيل البيانات بيانياً باستخدام طريقتين في نفس الرسم:</p>
+            <ul>
+                <li><strong>الأعمدة البيانية:</strong> تمثل ارتفاع درجات الحرارة لكل يوم.</li>
+                <li><strong>الخط المنكسر:</strong> يصل بين قمم الأعمدة لتوضيح التغير في درجات الحرارة.</li>
+            </ul>
+            <div class="chart-container">
+                <canvas id="chartQ5"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="q6">
+        <h2>(6) التوزيع التكراري لدرجات الطلاب</h2>
+        <p class="question-text">
+            التوزيع التكراري التالي يبين درجات مجموعة من الطلاب في أحد الاختبارات (المجموع الكلي 50 طالب).
+            <strong>المطلوب:</strong>
+            أولاً: ما عدد الطلاب الحاصلين على 30 درجة أو أكثر؟
+            ثانياً: ارسم المدرج التكراري لهذا التوزيع.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>المجموعات</th>
+                    <th>5 -</th>
+                    <th>10 -</th>
+                    <th>15 -</th>
+                    <th>20 -</th>
+                    <th>25 -</th>
+                    <th>30 -</th>
+                    <th>35 -</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>عدد الطلاب</strong></td>
+                    <td>3</td>
+                    <td>6</td>
+                    <td>8</td>
+                    <td>12</td>
+                    <td>10</td>
+                    <td>6</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            
+            <div class="report-box">
+                <strong>أولاً: حساب عدد الطلاب الحاصلين على 30 درجة أو أكثر:</strong><br>
+                يتم جمع تكرارات المجموعات التي تبدأ من 30 فأكثر (أي المجموعتين 30- و 35-).<br>
+                عدد الطلاب = تكرار (30-) + تكرار (35-)<br>
+                <span style="direction: ltr; display: inline-block; font-weight: bold;">= 6 + 5 = 11</span> <strong>طالباً</strong>.
+            </div>
+
+            <p style="margin-top: 20px;"><strong>ثانياً: المدرج التكراري:</strong></p>
+            <div class="chart-container">
+                <canvas id="chartQ6"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="q7">
+        <h2>(7) العلامات التكرارية لمادة الرياضيات</h2>
+        <p class="question-text">
+            يوضح الجدول الآتي تكرار درجات مجموعة من الطلاب في مادة الرياضيات (باستخدام العلامات).
+            <strong>المطلوب:</strong>
+            أولاً: أعد كتابة الجدول السابق موضحاً التكرارات بالأعداد.
+            ثانياً: ما عدد الطلاب الحاصلين على أقل من 15 درجة؟
+            ثالثاً: ارسم المضلع التكراري والمنحنى التكراري لهذا التوزيع.
+        </p>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            
+            <p><strong>أولاً: الجدول التكراري (بالأعداد):</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>المجموعات</th>
+                        <th>5 -</th>
+                        <th>10 -</th>
+                        <th>15 -</th>
+                        <th>20 -</th>
+                        <th>25 -</th>
+                        <th style="background-color: #333; color: #fff;">المجموع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>التكرار</strong></td>
+                        <td>5</td>
+                        <td>10</td>
+                        <td>17</td>
+                        <td>7</td>
+                        <td>2</td>
+                        <td><strong>41</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="report-box">
+                <strong>ثانياً: عدد الطلاب الحاصلين على أقل من 15 درجة:</strong><br>
+                نجمع تكرارات المجموعات التي تسبق 15 (أي المجموعات 5- و 10-).<br>
+                العدد = تكرار (5-) + تكرار (10-)<br>
+                <span style="direction: ltr; display: inline-block; font-weight: bold;">= 5 + 10 = 15</span> <strong>طالباً</strong>.
+            </div>
+
+            <p style="margin-top: 20px;"><strong>ثالثاً: المضلع والمنحنى التكراري:</strong></p>
+            <div class="chart-container">
+                <canvas id="chartQ7"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>تم إعداد الحلول والرسومات البيانية بدقة عالية</p>
+    </footer>
+</div>
+
+<script>
+    // إعدادات عامة للرسوم البيانية
+    Chart.defaults.font.family = "'Tajawal', sans-serif";
+    Chart.defaults.font.size = 14;
+    Chart.defaults.color = '#333';
+
+    // === السؤال 5: درجات الحرارة (أعمدة + خط منكسر) ===
+    new Chart(document.getElementById('chartQ5').getContext('2d'), {
+        data: {
+            labels: ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'الأعمدة البيانية',
+                    data: [20, 22, 20, 23, 21, 20, 19],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    order: 2
+                },
+                {
+                    type: 'line',
+                    label: 'الخط المنكسر',
+                    data: [20, 22, 20, 23, 21, 20, 19],
+                    borderColor: '#ff6384', // أحمر
+                    borderWidth: 3,
+                    tension: 0, // خط منكسر (مستقيمات)
+                    fill: false,
+                    pointStyle: 'circle',
+                    pointRadius: 6,
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 2,
+                    order: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { title: {display: true, text: 'درجات الحرارة العظمى (أعمدة وخط منكسر)'} },
+            scales: { y: { beginAtZero: false, min: 15 } } // بدء المحور من 15 لإظهار الفروق بوضوح
+        }
+    });
+
+    // === السؤال 6: المدرج التكراري ===
+    new Chart(document.getElementById('chartQ6').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['5-', '10-', '15-', '20-', '25-', '30-', '35-'],
+            datasets: [{
+                label: 'عدد الطلاب',
+                data: [3, 6, 8, 12, 10, 6, 5],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)', // أخضر مائي
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                barPercentage: 1.0, // أعمدة متلاصقة (مدرج تكراري)
+                categoryPercentage: 1.0
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { title: {display: true, text: 'المدرج التكراري لدرجات الطلاب'}, legend: {display: false} },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // === السؤال 7: المضلع والمنحنى التكراري ===
+    new Chart(document.getElementById('chartQ7').getContext('2d'), {
+        data: {
+            labels: ['5-', '10-', '15-', '20-', '25-'],
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'المضلع التكراري',
+                    data: [5, 10, 17, 7, 2],
+                    borderColor: '#0d6efd', // أزرق
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    borderWidth: 2,
+                    tension: 0, // خطوط مستقيمة
+                    fill: false,
+                    pointStyle: 'rect',
+                    pointRadius: 6
+                },
+                {
+                    type: 'line',
+                    label: 'المنحنى التكراري',
+                    data: [5, 10, 17, 7, 2],
+                    borderColor: '#dc3545', // أحمر
+                    borderWidth: 3,
+                    tension: 0.4, // خطوط منحنية ناعمة
+                    fill: false,
+                    pointRadius: 0 // إخفاء النقاط للمنحنى ليكون أملس
+                }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { title: {display: true, text: 'المضلع والمنحنى التكراري لدرجات الرياضيات'} },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>
+
+</body>
+</html>

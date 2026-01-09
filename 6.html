@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>شرح العرض البياني للبيانات - ملخص شامل</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Tajawal:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f4f4f9;
+            --text-color: #333;
+            --header-color: #2c3e50;
+            --border-color: #dee2e6;
+            --table-header-bg: #e9ecef;
+            --table-row-even-bg: #f8f9fa;
+        }
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: #fff;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        header p {
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 10px;
+        }
+        h2 {
+            font-size: 24px;
+            color: var(--header-color);
+            border-right: 5px solid var(--primary-color);
+            padding-right: 15px;
+            margin-top: 50px;
+            background-color: var(--secondary-color);
+            padding: 10px 15px 10px 0;
+            border-radius: 4px;
+        }
+        h3 {
+            font-size: 20px;
+            color: #0056b3;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1.1em;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        .highlight-text {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1em;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        table thead tr {
+            background-color: var(--table-header-bg);
+            color: var(--header-color);
+            text-align: center;
+            font-weight: bold;
+        }
+        table th, table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        table tbody tr:nth-of-type(even) {
+            background-color: var(--table-row-even-bg);
+        }
+        .solution-box {
+            background-color: #e6f7ff;
+            border-right: 5px solid #1890ff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .chart-container {
+            position: relative;
+            margin: 30px auto;
+            height: 400px;
+            width: 100%;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .math-block {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #ccc;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>العرض البياني للبيانات</h1>
+        <p>شرح تفصيلي وتلخيصي (جمع - تنظيم - تمثيل البيانات)</p>
+    </header>
+
+    <section id="intro">
+        <h2>أولاً: أهمية العرض البياني وأنواعه</h2>
+        <p>من الواضح أن الأرقام في الجداول الإحصائية تمثل أرقاماً صماء يجب قراءتها وتحليلها جيداً، ولكن في بعض الأحيان نحتاج لاستخلاص النتائج والحقائق بسرعة. هنا تأتي أهمية <strong>الرسومات والخطوط البيانية</strong> كوسيلة إضافية لعرض البيانات.</p>
+        
+        <div class="highlight-text">
+            يمكن تقسيم طرق العرض البياني حسب نوع الجدول إلى:
+        </div>
+        
+        <ul>
+            <li>
+                <strong>للجداول التكرارية البسيطة (أو النسبية):</strong>
+                <ul>
+                    <li>أ) الأعمدة (المستطيلات).</li>
+                    <li>ب) الخط البياني المنكسر.</li>
+                    <li>ج) القطاعات الدائرية.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>للجداول التكرارية (ذات المجموعات):</strong>
+                <ul>
+                    <li>أ) المدرج التكراري.</li>
+                    <li>ب) المضلع التكراري.</li>
+                    <li>ج) المنحنى التكراري.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section id="bar-charts">
+        <h2>ثانياً: العرض بواسطة الأعمدة والخط المنكسر</h2>
+        <h3>1. الأعمدة البيانية (المستطيلات)</h3>
+        <p>تستخدم الأعمدة ذات القواعد المتساوية لعرض البيانات، والفكرة الأساسية هي تمثيل كل فئة بعمود يتناسب ارتفاعه مع القيمة (التكرار).</p>
+        
+        <div class="solution-box">
+            <h4>مثال توضيحي:</h4>
+            <p>جمعت بيانات عن عدد تلاميذ مدرسة ابتدائية موزعين على الصفوف، فوجدت كالتالي:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الصف</th>
+                        <th>الأول</th>
+                        <th>الثاني</th>
+                        <th>الثالث</th>
+                        <th>الرابع</th>
+                        <th>الخامس</th>
+                        <th>السادس</th>
+                        <th>المجموع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>عدد التلاميذ</strong></td>
+                        <td>170</td>
+                        <td>160</td>
+                        <td>150</td>
+                        <td>140</td>
+                        <td>135</td>
+                        <td>145</td>
+                        <td>900</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><strong>قواعد الرسم:</strong></p>
+            <ul>
+                <li>يجب استخدام مقياس رسم مناسب يسمح بتمثيل جميع البيانات (مثلاً نبدأ التدريج من 100 ونزيد 10).</li>
+                <li>تكون قواعد الأعمدة متساوية وكذلك المسافات بين الأعمدة متساوية.</li>
+            </ul>
+
+            <div class="chart-container">
+                <canvas id="barChartExample"></canvas>
+            </div>
+            <p style="text-align: center; font-size: 0.9em; color: #666;">يمكن أيضاً تمثيل نفس البيانات بالخط المنكسر كما هو موضح بالخط الأحمر في الرسم أعلاه.</p>
+        </div>
+    </section>
+
+    <section id="pie-charts">
+        <h2>ثالثاً: القطاعات الدائرية</h2>
+        <p>يكون التمثيل بدلاً من المستطيلات أو الخطوط عبارة عن "دائرة"، ويكون مركز الدائرة هو الأساس. تحسب زاوية مركزية لكل فئة باستخدام التكرار النسبي.</p>
+        
+        <div class="math-block">
+            زاوية القطاع = (قيمة الفئة ÷ المجموع الكلي) × 360°
+        </div>
+
+        <div class="solution-box">
+            <h4>مثال (مؤهلات العاملين):</h4>
+            <p>في مثال العاملين بإحدى المستشفيات عن المؤهل الدراسي، يتم حساب الزوايا كالتالي:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>المؤهل الدراسي</th>
+                        <th>العدد</th>
+                        <th>زوايا القطاعات (الحساب)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>جامعي</td>
+                        <td>11</td>
+                        <td>(11 ÷ 30) × 360 = <strong>132°</strong></td>
+                    </tr>
+                    <tr>
+                        <td>فوق المتوسط</td>
+                        <td>8</td>
+                        <td>(8 ÷ 30) × 360 = <strong>96°</strong></td>
+                    </tr>
+                    <tr>
+                        <td>متوسط</td>
+                        <td>8</td>
+                        <td>(8 ÷ 30) × 360 = <strong>96°</strong></td>
+                    </tr>
+                    <tr>
+                        <td>ابتدائية</td>
+                        <td>3</td>
+                        <td>(3 ÷ 30) × 360 = <strong>36°</strong></td>
+                    </tr>
+                    <tr style="background-color: #333; color: #fff;">
+                        <td>المجموع</td>
+                        <td>30</td>
+                        <td>360°</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="chart-container" style="max-width: 500px;">
+                <canvas id="pieChartExample"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="histogram">
+        <h2>رابعاً: العرض بواسطة المدرج، المضلع، والمنحنى التكراري</h2>
+        <p>عند جمع بيانات لأعداد كبيرة من الأفراد، نستخدم "الجدول التكراري ذو المجموعات". في هذه الحالة، يكون العرض البياني المناسب هو المدرج أو المضلع أو المنحنى.</p>
+
+        <div class="solution-box">
+            <h4>مثال (أجور العمال):</h4>
+            <p>المطلوب رسم المدرج، المضلع، والمنحنى التكراري للبيانات التالية:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>مجموعات الأجر بالجنيه</th>
+                        <th>20 -</th>
+                        <th>30 -</th>
+                        <th>40 -</th>
+                        <th>50 -</th>
+                        <th>60 -</th>
+                        <th>70 -</th>
+                        <th>80 -</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>عدد العمال (التكرار)</strong></td>
+                        <td>6</td>
+                        <td>10</td>
+                        <td>18</td>
+                        <td>22</td>
+                        <td>12</td>
+                        <td>7</td>
+                        <td>5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>1. المدرج التكراري (Histogram)</h3>
+        <p>نتبع الخطوات الآتية:</p>
+        <ol>
+            <li>نرسم محورين متعامدين (أفقي للمجموعات، ورأسي للتكرارات).</li>
+            <li>نقسم المحور الأفقي وفقاً لطول المجموعات (متساوية الطول).</li>
+            <li>نرسم مستطيلات متلاصقة (لأن المجموعات متصلة)، قاعدة كل مستطيل تمثل طول المجموعة، وارتفاعه يمثل التكرار.</li>
+            <li>مساحات المستطيلات تتناسب مع التكرارات.</li>
+        </ol>
+
+        <h3>2. المضلع التكراري (Frequency Polygon)</h3>
+        <p>لرسم المضلع، لا نستخدم حدود المجموعات مباشرة، بل نستخدم <strong>مراكز المجموعات</strong>.</p>
+        <div class="math-block">
+            مركز المجموعة = (بداية المجموعة + نهاية المجموعة) ÷ 2
+        </div>
+        <p><strong>خطوات الرسم:</strong></p>
+        <ul>
+            <li>نحدد نقطة في منتصف أعلى كل مستطيل في المدرج التكراري (أو نحدد مراكز الفئات مباشرة على المحور الأفقي).</li>
+            <li>نصل بين هذه النقاط بقطع مستقيمة (باستخدام المسطرة).</li>
+            <li>يجب أن نغلق المضلع من البداية والنهاية (بافتراض تكرار صفر للمجموعة السابقة واللاحقة).</li>
+        </ul>
+
+        <h3>3. المنحنى التكراري (Frequency Curve)</h3>
+        <p>نفس خطوات المضلع التكراري تماماً، ولكن بدلاً من التوصيل بالمسطرة (قطع مستقيمة)، نقوم بالتوصيل <strong>باليد</strong> بخط انسيابي (منحنى) يمر بمعظم النقاط ويتوسطها، ليوضح اتجاه البيانات بشكل عام دون تذبذبات حادة.</p>
+
+        <div class="solution-box">
+            <h4>التمثيل البياني الشامل (مدرج + مضلع + منحنى):</h4>
+            <p>في الرسم التالي، تم دمج الثلاث طرق للتوضيح. يمكنك الضغط على مفتاح الرسم لإخفاء/إظهار كل نوع.</p>
+            <div class="chart-container">
+                <canvas id="combinedChart"></canvas>
+            </div>
+            <p><strong>ملاحظة هامة:</strong> المنحنى التكراري له دور كبير في الدراسة الإحصائية، حيث قمة المنحنى تحدد القيمة الأكثر شيوعاً (المنوال). في هذا المثال، قمة المنحنى عند الأجر (53 جنيهاً تقريباً).</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>تم إعداد هذا الشرح والتلخيص بناءً على محتوى الكتاب المدرسي المرفق</p>
+    </footer>
+</div>
+
+<script>
+    // إعدادات الخطوط العامة
+    Chart.defaults.font.family = "'Tajawal', sans-serif";
+    Chart.defaults.font.size = 14;
+    Chart.defaults.color = '#333';
+
+    // 1. Bar Chart & Line Chart Combined (Students Example)
+    const ctxBar = document.getElementById('barChartExample').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'عدد التلاميذ (أعمدة)',
+                    data: [170, 160, 150, 140, 135, 145],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 1,
+                    order: 2
+                },
+                {
+                    type: 'line',
+                    label: 'الخط المنكسر',
+                    data: [170, 160, 150, 140, 135, 145],
+                    borderColor: '#333',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0, // 0 means straight lines (broken line)
+                    pointRadius: 5,
+                    pointBackgroundColor: '#333',
+                    order: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    min: 100, // Starting from 100 as per the book image
+                    title: { display: true, text: 'التكرار' }
+                },
+                x: {
+                    title: { display: true, text: 'الصف الدراسي' }
+                }
+            },
+            plugins: {
+                title: { display: true, text: 'توزيع تلاميذ المدرسة الابتدائية' }
+            }
+        }
+    });
+
+    // 2. Pie Chart (Qualifications Example)
+    const ctxPie = document.getElementById('pieChartExample').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: ['جامعي (132°)', 'فوق المتوسط (96°)', 'متوسط (96°)', 'ابتدائية (36°)'],
+            datasets: [{
+                data: [11, 8, 8, 3],
+                backgroundColor: ['#d4ac0d', '#a04000', '#d35400', '#f1c40f'],
+                borderColor: '#fff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right' },
+                title: { display: true, text: 'مؤهلات العاملين بالمستشفى' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw;
+                            let total = context.chart._metasets[context.datasetIndex].total;
+                            let percentage = Math.round((value / total) * 100) + '%';
+                            return label.split(' ')[0] + ': ' + value + ' (' + percentage + ')';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 3. Combined Histogram, Polygon, Curve (Wages Example)
+    const ctxCombined = document.getElementById('combinedChart').getContext('2d');
+    new Chart(ctxCombined, {
+        data: {
+            labels: ['20-', '30-', '40-', '50-', '60-', '70-', '80-'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'المدرج التكراري',
+                    data: [6, 10, 18, 22, 12, 7, 5],
+                    backgroundColor: 'rgba(54, 162, 235, 0.4)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    barPercentage: 1.0, // Make bars touch
+                    categoryPercentage: 1.0,
+                    order: 3
+                },
+                {
+                    type: 'line',
+                    label: 'المضلع التكراري (خطوط مستقيمة)',
+                    data: [6, 10, 18, 22, 12, 7, 5],
+                    borderColor: '#333',
+                    borderWidth: 2,
+                    borderDash: [5, 5], // Dashed line for distinction
+                    tension: 0, // Straight lines
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 6,
+                    order: 2
+                },
+                {
+                    type: 'line',
+                    label: 'المنحنى التكراري (انسيابي)',
+                    data: [6, 10, 18, 22, 12, 7, 5],
+                    borderColor: '#d9534f', // Red color
+                    borderWidth: 3,
+                    tension: 0.4, // Curved lines
+                    fill: false,
+                    pointRadius: 0, // Hide points for smoother look
+                    order: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'عدد العمال (التكرار)' }
+                },
+                x: {
+                    title: { display: true, text: 'مجموعات الأجور' }
+                }
+            },
+            plugins: {
+                title: { display: true, text: 'توزيع أجور العمال (مدرج - مضلع - منحنى)' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

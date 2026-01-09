@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>حل التمارين (1-3) - إحصاء</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Tajawal:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --header-color: #2c3e50;
+            --border-color: #dee2e6;
+            --table-header-bg: #e9ecef;
+            --table-row-even-bg: #f8f9fa;
+        }
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: #fff;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 15px;
+        }
+        h2 {
+            font-size: 20px;
+            color: var(--header-color);
+            border-right: 5px solid var(--primary-color);
+            padding-right: 15px;
+            margin-top: 50px;
+            background-color: var(--secondary-color);
+            padding: 10px 15px 10px 0;
+            border-radius: 4px;
+        }
+        p.question-text {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        thead tr {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: var(--table-row-even-bg);
+        }
+        .solution-box {
+            background-color: #e6f7ff;
+            border-right: 5px solid #1890ff;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .solution-title {
+            color: #1890ff;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: block;
+            border-bottom: 1px solid #bce0fd;
+            padding-bottom: 10px;
+        }
+        .report-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #bce0fd;
+            margin-top: 15px;
+        }
+        .chart-container {
+            position: relative;
+            margin: 30px auto;
+            height: 400px; /* Increased height for better visibility */
+            width: 100%;
+        }
+        .math-step {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1em;
+            direction: ltr; /* For numbers/equations */
+            display: inline-block;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        @media print {
+            .container { box-shadow: none; border: none; width: 100%; max-width: none; }
+            .solution-box { break-inside: avoid; }
+            h2 { page-break-before: always; }
+            h2:first-of-type { page-break-before: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>حل التمارين (1-3)</h1>
+
+    <section id="q1">
+        <h2>(1) المدرج التكراري</h2>
+        <p class="question-text">
+            ارسم المدرج التكراري للتوزيع التكراري الآتي:
+        </p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>المجموعات</th>
+                    <th>60 -</th>
+                    <th>63 -</th>
+                    <th>66 -</th>
+                    <th>69 -</th>
+                    <th>72 -</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>التكرارات</strong></td>
+                    <td>5</td>
+                    <td>18</td>
+                    <td>42</td>
+                    <td>27</td>
+                    <td>8</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            <p>لتمثيل البيانات بالمدرج التكراري، نستخدم أعمدة متلاصقة تمثل كل فئة.</p>
+            <div class="chart-container">
+                <canvas id="chartQ1"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="q2">
+        <h2>(2) المضلع التكراري لدرجات امتحان التربية الدينية</h2>
+        <p class="question-text">
+            ارسم المضلع التكراري لتوزيع عدد التلاميذ المبين في الجدول الآتي حسب درجاتهم.
+            ثم أوجد الدرجة التي حصل عليها أكبر عدد من التلاميذ.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>مجموعات الدرجات</th>
+                    <th>0 -</th>
+                    <th>4 -</th>
+                    <th>8 -</th>
+                    <th>12 -</th>
+                    <th>16 -</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>عدد التلاميذ</strong></td>
+                    <td>12</td>
+                    <td>20</td>
+                    <td>24</td>
+                    <td>14</td>
+                    <td>8</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            
+            <div class="chart-container">
+                <canvas id="chartQ2"></canvas>
+            </div>
+
+            <div class="report-box">
+                <strong>إيجاد الدرجة التي حصل عليها أكبر عدد من التلاميذ (الدرجة المنوالية):</strong><br>
+                من الجدول، نلاحظ أن أكبر تكرار هو <strong>24</strong> تلميذاً.<br>
+                هذا التكرار يقابل المجموعة <strong>(8 -)</strong>.<br>
+                إذن، الدرجة التي حصل عليها أكبر عدد من التلاميذ هي مركز هذه الفئة تقريباً:<br>
+                <span style="display:inline-block; direction:ltr;">(8 + 12) ÷ 2 = <strong>10</strong></span> درجات تقريباً.
+            </div>
+        </div>
+    </section>
+
+    <section id="q3">
+        <h2>(3) توزيع أجور عمال المصنع</h2>
+        <p class="question-text">
+            يبين الجدول الآتي توزيع عمال أحد المصانع حسب مجموعات الأجر الأسبوعي بالجنيهات.
+            المطلوب رسم كل من المدرج والمضلع والمنحنى التكراري لهذه البيانات وإيجاد الأجر الذي يتناوله أكبر عدد من عمال المصنع.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>مجموعات الأجر</th>
+                    <th>50 -</th>
+                    <th>60 -</th>
+                    <th>70 -</th>
+                    <th>80 -</th>
+                    <th>90 -</th>
+                    <th>100 -</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>عدد العمال</strong></td>
+                    <td>8</td>
+                    <td>10</td>
+                    <td>16</td>
+                    <td>14</td>
+                    <td>10</td>
+                    <td>7</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            <p>يوضح الرسم البياني أدناه الثلاثة تمثيلات المطلوبة (المدرج، المضلع، المنحنى) في شكل واحد للمقارنة.</p>
+            
+            <div class="chart-container">
+                <canvas id="chartQ3"></canvas>
+            </div>
+
+            <div class="report-box">
+                <strong>إيجاد الأجر الذي يتقاضاه أكبر عدد من العمال (الأجر المنوالي):</strong><br>
+                أكبر عدد من العمال هو <strong>16</strong> عاملاً.<br>
+                هذا العدد يقع في فئة الأجر <strong>(70 -)</strong>.<br>
+                إذن، الأجر الأكثر شيوعاً هو مركز الفئة (70 إلى 80):<br>
+                <span style="display:inline-block; direction:ltr;">(70 + 80) ÷ 2 = <strong>75</strong></span> جنيهاً تقريباً.
+            </div>
+        </div>
+    </section>
+
+    <section id="q4">
+        <h2>(4) إحصاء مكتبة الكتب</h2>
+        <p class="question-text">
+            قام أمين المكتبة بحصر عدد الكتب الموجودة في المكتبة وأنواعها فوجد أن:
+            1/4 عدد الكتب دينية، 1/4 عدد الكتب أدبية، 1/2 عدد الكتب علمية.
+            مثل ذلك مستخدماً القطاعات الدائرية، وإذا كان إجمالي عدد الكتب 800 كتاب، فأوجد عدد الكتب من كل نوع.
+        </p>
+
+        <div class="solution-box">
+            <span class="solution-title">✓ الحل النموذجي:</span>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+                <div style="flex: 1; min-width: 300px;">
+                    <div class="report-box">
+                        <strong>أولاً: حساب عدد الكتب من كل نوع (الإجمالي 800):</strong>
+                        <ul style="list-style: none; padding-right: 0;">
+                            <li>
+                                📘 <strong>الكتب الدينية:</strong><br>
+                                <span style="direction: ltr; display: inline-block;">800 × (1/4) = <strong>200</strong></span> كتاب.
+                            </li>
+                            <li style="margin-top: 10px;">
+                                📕 <strong>الكتب الأدبية:</strong><br>
+                                <span style="direction: ltr; display: inline-block;">800 × (1/4) = <strong>200</strong></span> كتاب.
+                            </li>
+                            <li style="margin-top: 10px;">
+                                📗 <strong>الكتب العلمية:</strong><br>
+                                <span style="direction: ltr; display: inline-block;">800 × (1/2) = <strong>400</strong></span> كتاب.
+                            </li>
+                        </ul>
+                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                        <strong>ثانياً: زوايا القطاعات الدائرية:</strong>
+                        <ul style="list-style: none; padding-right: 0;">
+                            <li>زاوية الدينية = <span style="direction:ltr;">(1/4) × 360° = <strong>90°</strong></span></li>
+                            <li>زاوية الأدبية = <span style="direction:ltr;">(1/4) × 360° = <strong>90°</strong></span></li>
+                            <li>زاوية العلمية = <span style="direction:ltr;">(1/2) × 360° = <strong>180°</strong></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 300px; height: 350px;">
+                    <canvas id="chartQ4"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>تم إعداد الحلول والرسومات البيانية بدقة عالية</p>
+    </footer>
+</div>
+
+<script>
+    // إعدادات عامة للرسوم البيانية
+    Chart.defaults.font.family = "'Tajawal', sans-serif";
+    Chart.defaults.font.size = 14;
+    Chart.defaults.color = '#333';
+
+    // === السؤال 1: المدرج التكراري ===
+    new Chart(document.getElementById('chartQ1').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['60-', '63-', '66-', '69-', '72-'],
+            datasets: [{
+                label: 'التكرارات',
+                data: [5, 18, 42, 27, 8],
+                backgroundColor: 'rgba(220, 53, 69, 0.7)', // أحمر
+                borderColor: 'rgba(220, 53, 69, 1)',
+                borderWidth: 1,
+                barPercentage: 1.0,
+                categoryPercentage: 1.0
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: {display: false}, title: {display: true, text: 'المدرج التكراري'} },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // === السؤال 2: المضلع التكراري ===
+    new Chart(document.getElementById('chartQ2').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['0-', '4-', '8-', '12-', '16-'],
+            datasets: [{
+                label: 'عدد التلاميذ',
+                data: [12, 20, 24, 14, 8],
+                backgroundColor: 'rgba(255, 193, 7, 0.2)', // أصفر
+                borderColor: 'rgba(255, 193, 7, 1)',
+                borderWidth: 2,
+                tension: 0, // خطوط مستقيمة للمضلع
+                fill: true,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { title: {display: true, text: 'المضلع التكراري لدرجات التلاميذ'} },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // === السؤال 3: الرسم المجمع (مدرج + مضلع + منحنى) ===
+    new Chart(document.getElementById('chartQ3').getContext('2d'), {
+        data: {
+            labels: ['50-', '60-', '70-', '80-', '90-', '100-'],
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'المدرج التكراري',
+                    data: [8, 10, 16, 14, 10, 7],
+                    backgroundColor: 'rgba(0, 86, 179, 0.3)', // أزرق شفاف
+                    borderColor: 'rgba(0, 86, 179, 1)',
+                    borderWidth: 1,
+                    barPercentage: 1.0,
+                    categoryPercentage: 1.0,
+                    order: 3
+                },
+                {
+                    type: 'line',
+                    label: 'المضلع التكراري',
+                    data: [8, 10, 16, 14, 10, 7],
+                    borderColor: '#d63384', // وردي غامق
+                    borderWidth: 2,
+                    tension: 0, // خط مستقيم
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 6,
+                    order: 2
+                },
+                {
+                    type: 'line',
+                    label: 'المنحنى التكراري',
+                    data: [8, 10, 16, 14, 10, 7],
+                    borderColor: '#198754', // أخضر
+                    borderWidth: 3,
+                    tension: 0.4, // منحنى ناعم
+                    fill: false,
+                    pointRadius: 0, // إخفاء النقاط للمنحنى
+                    order: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: { title: {display: true, text: 'توزيع الأجور (مدرج - مضلع - منحنى)'} },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // === السؤال 4: القطاعات الدائرية ===
+    new Chart(document.getElementById('chartQ4').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['كتب دينية (1/4)', 'كتب أدبية (1/4)', 'كتب علمية (1/2)'],
+            datasets: [{
+                data: [200, 200, 400],
+                backgroundColor: ['#ffc107', '#dc3545', '#28a745'], // أصفر، أحمر، أخضر
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'توزيع أنواع الكتب' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw;
+                            return label + ': ' + value + ' كتاب';
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
